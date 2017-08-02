@@ -1,10 +1,18 @@
-import {expect} from 'chai';
-import add from '../src/index';
+import { expect } from "chai";
+import useAndThrow = require("../src/index");
+import { join } from "path";
 
-describe('Testing addition', ()=>{
-    it('returns 11 for 3,8', done=>{
-        let p = add(3,8);
-        expect(p).to.equal(11)
-        done();
-    })
-})
+describe("Testing use and throw", () => {
+	it("should successfully complete cycle", done => {
+		useAndThrow(
+			"https://i.ytimg.com/vi/YQHsXMglC9A/maxresdefault.jpg",
+			__dirname,
+			(err: any, path: any, cb: any) => {
+				cb();
+				expect(err).to.be.null;
+				expect(path.includes(__dirname)).to.be.true;
+				done();
+			}
+		);
+	});
+});

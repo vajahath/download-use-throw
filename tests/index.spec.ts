@@ -9,6 +9,7 @@ describe("Testing use and throw", () => {
 			__dirname,
 			(err: any, path: any, cb: any) => {
 				cb();
+
 				expect(err).to.be.null;
 				expect(path.includes(__dirname)).to.be.true;
 				done();

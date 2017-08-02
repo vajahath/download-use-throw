@@ -23,11 +23,16 @@
     "url": "https://github.com/vajahath/download-use-throw/issues"
   },
   "homepage": "https://github.com/vajahath/download-use-throw#readme",
-  "dependencies": {},
+  "dependencies": {
+    "got": "^7.1.0",
+    "shortid": "^2.2.8"
+  },
   "devDependencies": {
     "@types/chai": "^4.0.1",
+    "@types/got": "^7.1.0",
     "@types/mocha": "^2.2.41",
     "@types/node": "^8.0.5",
+    "@types/shortid": "^0.0.29",
     "chai": "^4.1.0",
     "concurrently": "^3.5.0",
     "cross-env": "^5.0.1",
@@ -38,5 +43,8 @@
     "tslint": "^5.5.0",
     "typescript": "^2.4.2"
   },
-  "pre-commit": ["preCommit-msg", "lint-noFix"]
+  "pre-commit": [
+    "preCommit-msg",
+    "lint-noFix"
+  ]
 }

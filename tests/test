@@ -1,0 +1,31 @@
+const useAndThrow = require("../dist/index");
+const path = require("path");
+
+// path to the directory to which
+// images are temporarily downloaded
+const dirPath = path.join(__dirname, "/temp");
+
+// url of the image to be downloaded
+const imgUrl = "https://i.ytimg.com/vi/YQHsXMglC9A/maxresdefault.jpg";
+
+// use and throw
+useAndThrow(imgUrl, dirPath, imageHandler);
+
+// function to apply on the downloaded image
+function imageHandler(err, pathToImage, done) {
+	if (err) {
+		// handle err
+
+		return done(); // call to done will trigger the deletion process.
+	}
+
+	// use the image
+	console.log(pathToImage);
+	// ...
+	// ...
+	// ...
+
+	// when you finished using the image, call done()
+	// which will trigger the deletion process
+	done();
+}

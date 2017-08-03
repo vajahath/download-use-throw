@@ -16,4 +16,29 @@ describe("Testing use and throw", () => {
 			}
 		);
 	});
+
+	it("test for bad url - type 1", done => {
+		useAndThrow(
+			"https://i.ytimg.com/vi/ffsdfasd/fasdfsad.jpg",
+			__dirname,
+			(err: any, path: any, cb: any) => {
+				cb();
+				expect(err).not.to.be.null;
+				expect(err).not.to.be.undefined;
+				done();
+			}
+		);
+	});
+	it("test for bad url - type 2", done => {
+		useAndThrow(
+			"ahfdsujhflkahsdjkfhaskdjfh",
+			__dirname,
+			(err: any, path: any, cb: any) => {
+				cb();
+				expect(err).not.to.be.null;
+				expect(err).not.to.be.undefined;
+				done();
+			}
+		);
+	});
 });

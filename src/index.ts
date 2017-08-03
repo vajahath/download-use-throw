@@ -7,9 +7,9 @@ import * as shortid from 'shortid';
 const downloadBlob = (url: string, inStream: any, cb: any) => {
 	got
 		.stream(url)
+		.on('error', (err: any) => cb(err))
 		.pipe(inStream)
-		.on('error', (err: object) => cb(err))
-		.on('close', () => cb());
+		.on('finish', () => cb());
 };
 
 // blob cleaner
@@ -22,9 +22,13 @@ const deleteBlob = (filePath: string) => {
 };
 
 // controller - main function
-export = (url: string, destinationPath: string, fn: any) => {
-	if (!url || !fn) {
-		throw new Error('url and handler functions are expected');
+export = (url: string, destinationPath: string, handlerFn: any) => {
+	if (!url || !handlerFn) {
+		return handlerFn(
+			new Error('url and handler functions are expected'),
+			null,
+			() => false,
+		);
 	}
 
 	const fileName = path.join(destinationPath, '/' + shortid.generate());
@@ -32,9 +36,9 @@ export = (url: string, destinationPath: string, fn: any) => {
 
 	downloadBlob(url, blobStream, (err: object) => {
 		if (err) {
-			return fn(err);
+			return handlerFn(err, null, () => deleteBlob(fileName));
 		}
-		fn(null, fileName, () => {
+		return handlerFn(null, fileName, () => {
 			deleteBlob(fileName);
 		});
 	});

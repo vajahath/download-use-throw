@@ -7,9 +7,9 @@ var shortid = require("shortid");
 var downloadBlob = function (url, inStream, cb) {
     got
         .stream(url)
-        .pipe(inStream)
         .on('error', function (err) { return cb(err); })
-        .on('close', function () { return cb(); });
+        .pipe(inStream)
+        .on('finish', function () { return cb(); });
 };
 // blob cleaner
 var deleteBlob = function (filePath) {
@@ -19,17 +19,17 @@ var deleteBlob = function (filePath) {
         }
     });
 };
-module.exports = function (url, destinationPath, fn) {
-    if (!url || !fn) {
-        throw new Error('url and handler functions are expected');
+module.exports = function (url, destinationPath, handlerFn) {
+    if (!url || !handlerFn) {
+        return handlerFn(new Error('url and handler functions are expected'), null, function () { return false; });
     }
     var fileName = path.join(destinationPath, '/' + shortid.generate());
     var blobStream = fs.createWriteStream(fileName);
     downloadBlob(url, blobStream, function (err) {
         if (err) {
-            return fn(err);
+            return handlerFn(err, null, function () { return deleteBlob(fileName); });
         }
-        fn(null, fileName, function () {
+        return handlerFn(null, fileName, function () {
             deleteBlob(fileName);
         });
     });

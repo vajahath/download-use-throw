@@ -1,6 +1,6 @@
 {
 	"name": "download-use-throw",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Download something - use it - finally delete it",
 	"main": "dist/index.js",
 	"scripts": {
